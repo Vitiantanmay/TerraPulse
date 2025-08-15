@@ -1,0 +1,5 @@
+{
+  "name": "TerraPulse - Global Real-Time Event Tracker",
+  "description": "An interactive website that tracks and displays multiple real-time global events on an interactive world map. Features a dark neon theme with glowing highlights, smooth animations, and intuitive navigation to monitor earthquakes, the ISS, flights, and more.",
+  "requestFramePermissions": []
+}
