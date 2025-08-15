@@ -5,7 +5,7 @@ import ControlPanel from './components/ControlPanel';
 import DetailsSidebar from './components/DetailsSidebar';
 import Loader from './components/Loader';
 import { useInterval } from './hooks/useInterval';
-import { fetchEarthquakes, fetchIssPosition, fetchFlights, fetchSimulatedShips, fetchSimulatedWildlife } from './services/api';
+import { fetchEarthquakes, fetchIssPosition, fetchSimulatedFlights, fetchSimulatedShips, fetchSimulatedWildlife } from './services/api';
 import type { EarthquakeFeature, IssData, Flight, Ship, Wildlife, EventData, LayerToggles } from './types';
 import { REFRESH_INTERVAL, INITIAL_LAYER_TOGGLES } from './constants';
 
@@ -48,17 +48,12 @@ const App: React.FC = () => {
       setLoading(prev => ({ ...prev, iss: false }));
     }
     
-    try {
-      setLoading(prev => ({ ...prev, flights: true }));
-      const flightsData = await fetchFlights();
-      setFlights(flightsData);
-    } catch (error) {
-      console.error("Failed to fetch flights data:", error);
-    } finally {
-      setLoading(prev => ({ ...prev, flights: false }));
-    }
-
     // Simulated data
+    setLoading(prev => ({ ...prev, flights: true }));
+    const flightsData = await fetchSimulatedFlights(flights);
+    setFlights(flightsData);
+    setLoading(prev => ({ ...prev, flights: false }));
+
     setLoading(prev => ({ ...prev, ships: true }));
     const shipsData = await fetchSimulatedShips(ships);
     setShips(shipsData);
@@ -69,7 +64,7 @@ const App: React.FC = () => {
     setWildlife(wildlifeData);
     setLoading(prev => ({ ...prev, wildlife: false }));
 
-  }, [ships, wildlife]);
+  }, [flights, ships, wildlife]);
 
   useEffect(() => {
     fetchData();

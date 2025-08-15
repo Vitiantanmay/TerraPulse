@@ -22,7 +22,7 @@ const ControlPanel: React.FC<ControlPanelProps> = ({ toggles, onToggle }) => {
   const layers: { key: keyof LayerToggles; label: string; color: string }[] = [
     { key: 'earthquakes', label: 'Earthquakes', color: 'bg-orange-500' },
     { key: 'iss', label: 'ISS', color: 'bg-cyan-400' },
-    { key: 'flights', label: 'Flights', color: 'bg-yellow-400' },
+    { key: 'flights', label: 'Flights (Simulated)', color: 'bg-yellow-400' },
     { key: 'ships', label: 'Ships (Simulated)', color: 'bg-blue-500' },
     { key: 'wildlife', label: 'Wildlife (Simulated)', color: 'bg-green-500' },
     { key: 'dayNightOverlay', label: 'Day/Night Overlay', color: 'bg-purple-500' },

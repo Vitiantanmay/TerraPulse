@@ -18,23 +18,57 @@ export const fetchIssPosition = async (): Promise<IssData> => {
   return response.json();
 };
 
-export const fetchFlights = async (): Promise<Flight[]> => {
-  const response = await fetch(API_URLS.FLIGHTS);
-  if (!response.ok) {
-    throw new Error('Network response was not ok for flights');
-  }
-  const data = await response.json();
-  // The API returns a large array, we only take the first 500 for performance.
-  // We also filter out flights without coordinate data.
-  return (data.states || [])
-    .filter((f: Flight) => f[5] != null && f[6] != null)
-    .slice(0, 500);
-};
-
 // --- SIMULATED DATA ---
 // In a real-world application, these would be API calls.
 
 const getRandomOffset = (range: number = 0.05) => (Math.random() - 0.5) * range;
+
+export const fetchSimulatedFlights = async (oldFlights: Flight[] = []): Promise<Flight[]> => {
+  if (oldFlights.length > 0) {
+    return oldFlights.map(flight => {
+      const newFlight: Flight = [...flight];
+      const lat = newFlight[6] || 0;
+      const lon = newFlight[5] || 0;
+
+      newFlight[6] = Math.max(-85, Math.min(85, lat + getRandomOffset(0.5)));
+      const newLon = lon + getRandomOffset(0.5);
+      newFlight[5] = newLon > 180 ? newLon - 360 : newLon < -180 ? newLon + 360 : newLon;
+      
+      newFlight[10] = (newFlight[10] || 0) + getRandomOffset(15);
+      newFlight[4] = Date.now() / 1000;
+      return newFlight;
+    });
+  }
+
+  // Initial data generation
+  const hubs = [
+    { lat: 40.64, lon: -73.77, country: 'USA', prefix: 'UAL', icao: 'a' },
+    { lat: 51.47, lon: -0.45, country: 'UK', prefix: 'BAW', icao: '4' },
+    { lat: 35.55, lon: 139.78, country: 'Japan', prefix: 'JAL', icao: '8' },
+    { lat: -22.8, lon: -43.2, country: 'Brazil', prefix: 'GOL', icao: 'e' },
+    { lat: -33.9, lon: 151.1, country: 'Australia', prefix: 'QFA', icao: '7' }
+  ];
+  const initialFlights: Flight[] = [];
+  hubs.forEach(hub => {
+    for (let i = 0; i < 40; i++) {
+      const now = Date.now() / 1000;
+      const altitude = 8000 + Math.random() * 4000;
+      initialFlights.push([
+        hub.icao + Math.random().toString(16).substring(2, 7),
+        hub.prefix + (Math.floor(Math.random() * 900) + 100),
+        hub.country,
+        now, now,
+        hub.lon + getRandomOffset(20), hub.lat + getRandomOffset(20),
+        altitude, false, 200 + Math.random() * 100,
+        Math.random() * 360, getRandomOffset(5), null,
+        altitude + (Math.random() * 200),
+        String(Math.floor(1000 + Math.random() * 8000)),
+        false, 0, 1,
+      ]);
+    }
+  });
+  return Promise.resolve(initialFlights);
+};
 
 // Simulate ship movement. If oldShips array is passed, it moves them slightly.
 export const fetchSimulatedShips = async (oldShips: Ship[] = []): Promise<Ship[]> => {
