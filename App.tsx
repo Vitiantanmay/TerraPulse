@@ -1,5 +1,4 @@
-
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Map from './components/Map';
 import ControlPanel from './components/ControlPanel';
 import DetailsSidebar from './components/DetailsSidebar';
@@ -9,7 +8,7 @@ import { fetchEarthquakes, fetchIssPosition, fetchSimulatedFlights, fetchSimulat
 import type { EarthquakeFeature, IssData, Flight, Ship, Wildlife, EventData, LayerToggles } from './types';
 import { REFRESH_INTERVAL, INITIAL_LAYER_TOGGLES } from './constants';
 
-const App: React.FC = () => {
+const App = () => {
   const [earthquakes, setEarthquakes] = useState<EarthquakeFeature[]>([]);
   const [issPosition, setIssPosition] = useState<IssData | null>(null);
   const [flights, setFlights] = useState<Flight[]>([]);

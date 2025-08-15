@@ -1,10 +1,9 @@
-
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { useMap } from 'react-leaflet';
 import type L from 'leaflet';
 import TerminatorClass from 'leaflet-terminator';
 
-const Terminator: React.FC = () => {
+const Terminator = () => {
   const map = useMap();
   const terminatorRef = useRef<L.Layer | null>(null);
 

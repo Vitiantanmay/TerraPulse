@@ -1,4 +1,3 @@
-import React from 'react';
 import { MapContainer, TileLayer, Marker } from 'react-leaflet';
 import L from 'leaflet';
 import MarkerClusterGroup from 'react-leaflet-cluster';
@@ -16,7 +15,7 @@ interface MapProps {
   onEventSelect: (event: EventData) => void;
 }
 
-const Map: React.FC<MapProps> = ({ earthquakes, issPosition, flights, ships, wildlife, toggles, onEventSelect }) => {
+const Map = ({ earthquakes, issPosition, flights, ships, wildlife, toggles, onEventSelect }: MapProps) => {
   const mapCenter: [number, number] = [20, 0];
   const worldBounds: L.LatLngBoundsExpression = [
     [-90, -180], // Southwest

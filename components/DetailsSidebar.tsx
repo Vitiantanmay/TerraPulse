@@ -1,5 +1,3 @@
-
-import React from 'react';
 import type { EventData } from '../types';
 
 interface DetailsSidebarProps {
@@ -7,7 +5,7 @@ interface DetailsSidebarProps {
   onClose: () => void;
 }
 
-const DetailsSidebar: React.FC<DetailsSidebarProps> = ({ event, onClose }) => {
+const DetailsSidebar = ({ event, onClose }: DetailsSidebarProps) => {
   const typeStyles: Record<string, { bg: string, text: string, icon: string }> = {
     Earthquake: { bg: 'bg-orange-500/20', text: 'text-orange-300', icon: '🌋' },
     ISS: { bg: 'bg-cyan-500/20', text: 'text-cyan-300', icon: '🛰️' },

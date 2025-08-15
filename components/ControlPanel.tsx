@@ -1,5 +1,3 @@
-
-import React from 'react';
 import type { LayerToggles } from '../types';
 
 interface ControlPanelProps {
@@ -7,7 +5,7 @@ interface ControlPanelProps {
   onToggle: (layer: keyof LayerToggles) => void;
 }
 
-const Toggle: React.FC<{ label: string; isChecked: boolean; onToggle: () => void; accentColor: string }> = ({ label, isChecked, onToggle, accentColor }) => (
+const Toggle = ({ label, isChecked, onToggle, accentColor }: { label: string; isChecked: boolean; onToggle: () => void; accentColor: string }) => (
   <label className="flex items-center justify-between cursor-pointer my-2">
     <span className="text-gray-300 text-sm font-medium">{label}</span>
     <div className="relative">
@@ -18,7 +16,7 @@ const Toggle: React.FC<{ label: string; isChecked: boolean; onToggle: () => void
   </label>
 );
 
-const ControlPanel: React.FC<ControlPanelProps> = ({ toggles, onToggle }) => {
+const ControlPanel = ({ toggles, onToggle }: ControlPanelProps) => {
   const layers: { key: keyof LayerToggles; label: string; color: string }[] = [
     { key: 'earthquakes', label: 'Earthquakes', color: 'bg-orange-500' },
     { key: 'iss', label: 'ISS', color: 'bg-cyan-400' },
